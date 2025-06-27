@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Cuisine;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use validate;
 
 class CuisineController extends Controller
 {
@@ -18,8 +19,16 @@ class CuisineController extends Controller
         ]);
     }
 
+    public function create()
+{
+    return response()->json([
+        'status' => true,
+        'message' => 'This is an API create endpoint placeholder'
+    ]);
+}
 
-    
+
+
     public function store(Request $request)
     {
         $validated = $request->validate([

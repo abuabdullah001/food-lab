@@ -39,7 +39,7 @@ class ProductController extends Controller
                 ->make(true);
         }
 
-        return view('backend.layouts.product.index'); // Replace with your actual view path for products (e.g., 'backend.product.index'); // Make sure this path is correct
+        return view('backend.layouts.product.index');
     }
 
 

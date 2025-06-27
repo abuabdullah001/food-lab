@@ -5,32 +5,25 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
     //    public function index(Request $request)
-public function index(Request $request)
+    public function index(Request $request)
     {
-        
         $products = Product::all();
         return response()->json($products);
     }
 
-    public function show($id)
-    {
-      
-        $product = Product::findOrFail($id);
-        return response()->json($product);
-    }
 
     public function store(Request $request)
     {
-
         $validatedData = $request->validate([
             'product_name' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:products',
             'product_description' => 'nullable|string',
-            'price' => 'required|numeric|min:0',            
+            'price' => 'required|numeric|min:0',
             'cuisines_id' => 'required|exists:cuisines,id',
             'ingredients' => 'nullable|string',
             'pre_order' => 'required|in:active,deactive',
@@ -44,22 +37,32 @@ public function index(Request $request)
 
     public function create()
     {
-        return response((
-            [
-            'message'=>'Product creteted successfully.',]
+        return response(([
+            'message' => 'Product creteted successfully.',
+        ]
         ), 201);
-    }   
+    }
+
+
+    public function show($id)
+    {
+        $product = Product::findOrFail($id);
+        return response()->json($product);
+    }
+
 
 
     public function edit($id)
     {
         $product = Product::findOrFail($id);
         return response()->json($product);
-    }   
+    }
+
     public function update(Request $request, $id)
     {
         $product = Product::findOrFail($id);
-        $validated = $request->validate([
+        
+        $validated = Validator::make($request->all(), [
             'product_name' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:products,slug,' . $product->id,
             'product_description' => 'nullable|string',
@@ -71,8 +74,14 @@ public function index(Request $request)
             'start_date' => 'nullable|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
         ]);
-        $product->update($validated);
-        return response()->json($product);  
+        
+        if($validated->fails()){
+            return response()->json($validated->errors(), 422);
+        }
+        
+        $product->update($request->all());
+     
+        return response()->json($product);
     }
 
     public function destroy($id)
@@ -81,6 +90,5 @@ public function index(Request $request)
         $product->delete();
         return response()->json(['message' => 'Product deleted successfully.'], 200);
     }
-
-
+    
 }
