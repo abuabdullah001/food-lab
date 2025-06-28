@@ -6,6 +6,8 @@ use App\Http\Controllers\Api\CuisineController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\DietryRestrictionsController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\ReasonController;
+use App\Http\Controllers\Api\ProductReportController;
 
 
 
@@ -52,4 +54,20 @@ Route::get('dietry/index', [DietryRestrictionsController::class, 'index']);
 Route::post('dietry/store', [DietryRestrictionsController::class, 'store']);
 Route::post('dietry/update/{dietry_id}', [DietryRestrictionsController::class, 'update']);
 Route::delete('dietry/delete/{dietry_id}', [DietryRestrictionsController::class, 'destroy']);
+
+// reasons
+Route::get('reason/index', [ReasonController::class, 'index']);
+Route::post('reason/store', [ReasonController::class, 'store']);
+Route::get('reason/edit/{id}', [ReasonController::class, 'edit']);
+Route::post('reason/update/{id}', [ReasonController::class, 'update']);
+Route::delete('reason/delete/{id}', [ReasonController::class, 'destroy']);
+
+// reports
+Route::get('reports/index', [ProductReportController::class, 'index']);
+Route::post('reports/store', [ProductReportController::class, 'store']);
+Route::get('reports/show/{id}', [ProductReportController::class, 'show']);
+Route::post('reports/update/{id}', [ProductReportController::class, 'update']);
+Route::delete('reports/delete/{id}', [ProductReportController::class, 'destroy']);
+
+
 

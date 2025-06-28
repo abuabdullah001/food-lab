@@ -14,19 +14,19 @@ class User extends Authenticatable
     use HasFactory, Notifiable,HasRoles;
 
 
-
-  
-
- protected $fillable = [
-    'name', 'last_name', 'shop_name', 'email', 'phone', 'password', 'confirmed_password',
+protected $fillable = [
+    'name', 'last_name', 'shop_name', 'email', 'phone', 'password', 
     'street', 'city', 'post_code', 'flat_house_no', 'user_type', 'otp', 'otp_expires_at',
     'is_verified', 'shop_status', 'email_verified_at', 'account_delete_comment',
     'latitude', 'longitude', 'image',
 ];
 
+
+
 protected $hidden = [
-    'password', 'confirmed_password', 'otp','remember_token',
+    'password', 'confirm_password', 'otp', 'remember_token',
 ];
+
 
 protected $casts = [
     'email_verified_at' => 'datetime',
@@ -40,11 +40,15 @@ protected $casts = [
 
 public function setPasswordAttribute($value)
 {
-    if (!Hash::needsRehash($value)) {
+    if (Hash::needsRehash($value)) {
         $this->attributes['password'] = Hash::make($value);
     } else {
         $this->attributes['password'] = $value;
     }
 }
+
+
+
+
 
 }

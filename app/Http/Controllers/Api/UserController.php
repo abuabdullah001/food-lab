@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    
+
     public function index()
     {
         $users = User::all();
@@ -21,16 +21,17 @@ class UserController extends Controller
     }
 
 
-      public function store(Request $request)
+    public function store(Request $request)
     {
+        
         $validator = Validator::make($request->all(), [
             'name'              => 'required|string|max:255',
             'last_name'         => 'nullable|string|max:255',
             'shop_name'         => 'nullable|string|max:255',
             'email'             => 'required|email|unique:users,email',
             'phone'             => 'required|string|max:20',
-            'password'          => 'required|string|min:6|confirmed',
-            'user_type'         => 'required|in:admin,customer,shop,superadmin',
+            'password'          => 'required|string|min:8|confirmed',
+            'role'         => 'required|in:admin,customer,shop,superadmin',
             'shop_status'       => 'in:approve,pending,cancel',
             'street'            => 'nullable|string',
             'city'              => 'nullable|string',
@@ -39,6 +40,10 @@ class UserController extends Controller
             'latitude'          => 'nullable|numeric',
             'longitude'         => 'nullable|numeric',
             'image'             => 'nullable|string',
+            
+        ], 
+        [
+            'password.confirmed' => 'The password confirmation does not match.'
         ]);
 
         if ($validator->fails()) {
@@ -46,7 +51,7 @@ class UserController extends Controller
         }
 
         $data = $validator->validated();
-
+        // User model handles hashing via setPasswordAttribute()
         $user = User::create($data);
 
         return response()->json([
@@ -55,7 +60,8 @@ class UserController extends Controller
         ], 201);
     }
 
-    
+
+
     public function show($id)
     {
         $user = User::find($id);
@@ -70,10 +76,10 @@ class UserController extends Controller
         ]);
     }
 
-    
-  
 
-  
+
+
+
     public function update(Request $request, $id)
     {
         $user = User::find($id);
@@ -112,7 +118,7 @@ class UserController extends Controller
         ]);
     }
 
-   
+
     public function destroy($id)
     {
         $user = User::find($id);
@@ -127,7 +133,4 @@ class UserController extends Controller
             'message' => 'User deleted successfully.'
         ]);
     }
-
-    
 }
-

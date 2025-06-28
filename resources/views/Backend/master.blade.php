@@ -19,13 +19,11 @@
 
   @include('Backend.Partial.style')
 
-
 </head>
 
 <body>
 
   @include('Backend.Partial.header')
-
 
   <!-- /.modal -->
   <!-- ========== App Menu ========== -->
