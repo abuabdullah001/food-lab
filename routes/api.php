@@ -8,6 +8,8 @@ use App\Http\Controllers\Api\DietryRestrictionsController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\ReasonController;
 use App\Http\Controllers\Api\ProductReportController;
+use App\Http\Controllers\Api\UserDetailsController;
+use App\Http\Controllers\Api\DayController;
 
 
 
@@ -19,6 +21,12 @@ Route::post('user/update/{id}', [UserController::class, 'update']);
 Route::delete('user/delete/{id}', [UserController::class, 'destroy']);
 
 
+// user details
+Route::get('userdetails/index', [UserDetailsController::class, 'index']);
+Route::get('userdetails/show/{id}', [UserDetailsController::class, 'show']);
+Route::post('userdetails/store', [UserDetailsController::class, 'store']);
+Route::post('userdetails/update/{id}', [UserDetailsController::class, 'update']);
+Route::delete('userdetails/delete/{id}', [UserDetailsController::class, 'destroy']);
 
 
 
@@ -70,4 +78,14 @@ Route::post('reports/update/{id}', [ProductReportController::class, 'update']);
 Route::delete('reports/delete/{id}', [ProductReportController::class, 'destroy']);
 
 
+// product available days
+Route::get('products/availableDays/{product_id}', [ProductController::class, 'availableDays']);
 
+
+
+
+// Day
+Route::get('day/index', [DayController::class, 'index']);
+Route::post('day/store', [DayController::class, 'store']);
+Route::post('day/update/{day_id}', [DayController::class, 'update']);
+Route::delete('day/delete/{day_id}', [DayController::class, 'destroy']);

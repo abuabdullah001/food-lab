@@ -31,7 +31,7 @@ class UserController extends Controller
             'email'             => 'required|email|unique:users,email',
             'phone'             => 'required|string|max:20',
             'password'          => 'required|string|min:8|confirmed',
-            'role'         => 'required|in:admin,customer,shop,superadmin',
+            'role'              => 'required|in:admin,customer,shop,superadmin',
             'shop_status'       => 'in:approve,pending,cancel',
             'street'            => 'nullable|string',
             'city'              => 'nullable|string',
